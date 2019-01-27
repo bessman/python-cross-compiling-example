@@ -1,7 +1,7 @@
-FROM ubuntu:16.04
+FROM debian:stretch
 
-RUN apt-get update && \
-    apt-get install -y \
+RUN apt update && \
+    apt install -y \
         autoconf \
         automake \
         build-essential \
@@ -13,7 +13,9 @@ RUN apt-get update && \
         pkg-config \
         python \
         unzip \
-        zlib1g-dev && \
+        zlib1g-dev \
+	libsqlite3-dev \
+	g++-arm-linux-gnueabihf && \
     rm -rf /var/lib/apt/lists/* && \
     mkdir /working /source /output
 

@@ -5,13 +5,12 @@ OPENSSL_LIB := $(INSTALL)/lib/libssl.a
 
 $(OPENSSL_EXTRACT)/Makefile: $(OPENSSL_EXTRACT).extracted $(host-toolchain)
 	cd $(dir $@) \
-	&& sed -i 's/-mandroid//' Configurations/10-main.conf \
 	&& ./Configure \
 		--prefix=$(INSTALL) \
 		$(CROSS_CPPFLAGS) \
 		$(CROSS_CFLAGS) \
 		$(CROSS_LDFLAGS) \
-		android-armeabi
+		linux-armv4
 
 $(OPENSSL_LIB): export CC = $(CROSS_CC)
 $(OPENSSL_LIB): export CROSS_SYSROOT = $(HOST_SYSROOT)

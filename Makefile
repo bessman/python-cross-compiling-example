@@ -5,7 +5,7 @@ all:
 
 OUTPUT := .
 WORKING := $(TOP)/working
-INSTALL := $(WORKING)/python_android_demo
+INSTALL := $(WORKING)/python_armhf
 WHEELS := $(WORKING)/wheels
 STAGE_MARKERS := $(WORKING)/stages
 
@@ -23,7 +23,6 @@ $(call define-stage,\
 	build-python-modules \
 	host-python-wheels \
 	host-python-modules \
-	examples \
 	package \
 	)
 

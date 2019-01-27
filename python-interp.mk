@@ -1,6 +1,6 @@
 #####################
 # build-python
-PYTHON_URL := https://www.python.org/ftp/python/3.6.4/Python-3.6.4.tar.xz
+PYTHON_URL := https://www.python.org/ftp/python/3.6.5/Python-3.6.5.tar.xz
 PYTHON_TAR := $(call download,$(PYTHON_URL))
 BUILD_PYTHON_EXTRACT := $(call extract,$(PYTHON_TAR))
 BUILD_PYTHON_BUILDDIR := $(WORKING)/build-python/build
@@ -25,29 +25,20 @@ HOST_PYTHON_EXTRACT := $(call extract-to,$(WORKING)/host-python,$(PYTHON_TAR))
 HOST_PYTHON_BUILDDIR := $(WORKING)/host-python/build
 HOST_PYTHON := $(INSTALL)/bin/python3
 
-$(HOST_PYTHON_EXTRACT).patched: $(HOST_PYTHON_EXTRACT).extracted
-	sed -i 's!/bin/sh!/system/bin/sh!' $(HOST_PYTHON_EXTRACT)/Lib/subprocess.py
-	touch $@
-
-$(HOST_PYTHON_BUILDDIR)/config.site: | $(HOST_PYTHON_BUILDDIR)
+$(HOST_PYTHON_BUILDDIR)/config.site: $(HOST_PYTHON_EXTRACT) | $(HOST_PYTHON_BUILDDIR)
 	echo 'ac_cv_file__dev_ptmx=no' > $@
 	echo 'ac_cv_file__dev_ptc=no' >> $@
-	echo 'ac_cv_header_langinfo_h=no' >> $@
+	echo 'ac_cv_have_long_long_format=yes' >> $@
 
-$(HOST_PYTHON_BUILDDIR)/Makefile: $(HOST_PYTHON_EXTRACT).patched \
-		$(HOST_PYTHON_BUILDDIR)/config.site $(BUILD_PYTHON) $(host-toolchain) \
+$(HOST_PYTHON_BUILDDIR)/Makefile: $(HOST_PYTHON_BUILDDIR)/config.site $(BUILD_PYTHON) $(host-toolchain) \
 		$(compile-host) | $(HOST_PYTHON_BUILDDIR)
 	cd $(dir $@) \
-	&& echo 'ac_cv_file__dev_ptmx=no' > config.site \
-	&& echo 'ac_cv_file__dev_ptc=no' >> config.site \
-	&& echo 'ac_cv_header_langinfo_h=no' >> config.site \
 	&& $(HOST_PYTHON_EXTRACT)/configure \
 			--prefix=$(INSTALL) \
-			--disable-shared \
+			--enable-shared \
 			--host=$(HOST) \
 			--build=$(BUILD) \
 			--disable-ipv6 \
-			--without-ensurepip \
 			--with-system-ffi \
 			CONFIG_SITE=$(HOST_PYTHON_BUILDDIR)/config.site \
 			CC=$(CROSS_CC) \
