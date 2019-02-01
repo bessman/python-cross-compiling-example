@@ -6,8 +6,10 @@ to run on Linux on ARM. It is a fork from https://github.com/benfogle/python-cro
 The makefile above will download all dependencies, build them, and produce a tarball containing:
 
 - Python 3.6 for linux-gnueabihf
-- numpy
+- Numpy (with OpenBLAS)
 - Pandas
+- Scipy
+- Scikit-learn
 
 
 Building
@@ -23,8 +25,7 @@ To build using Docker, first build the image:
 
 .. code:: sh
 
-    $ docker build \
-        https://github.com/ezeenova/python-cross-compiling-example#linux-gnu-armhf
+    $ docker build https://raw.githubusercontent.com/ezeenova/python-cross-compiling-example/linux-gnu-armhf/docker/Dockerfile
 
 Then run the image:
 
