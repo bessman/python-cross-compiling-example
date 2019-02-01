@@ -1,6 +1,6 @@
 #####################
 # build-python
-PYTHON_URL := https://www.python.org/ftp/python/3.6.5/Python-3.6.5.tar.xz
+PYTHON_URL := https://www.python.org/ftp/python/3.6.7/Python-3.6.7.tar.xz
 PYTHON_TAR := $(call download,$(PYTHON_URL))
 BUILD_PYTHON_EXTRACT := $(call extract,$(PYTHON_TAR))
 BUILD_PYTHON_BUILDDIR := $(WORKING)/build-python/build

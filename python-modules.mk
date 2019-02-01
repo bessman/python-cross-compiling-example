@@ -11,10 +11,10 @@ $(build-python-modules): $(crossenv)
 
 PYTHON_SHLIBS := m
 
-NUMPY_URL := https://files.pythonhosted.org/packages/04/b6/d7faa70a3e3eac39f943cc6a6a64ce378259677de516bd899dd9eb8f9b32/numpy-1.16.0.zip
+NUMPY_URL := https://github.com/numpy/numpy/archive/v1.16.1.tar.gz
 NUMPY_ZIP := $(call download,$(NUMPY_URL))
-NUMPY_EXTRACT := $(call extract,$(NUMPY_ZIP),numpy-1.16.0)
-NUMPY_WHEEL := $(WORKING)/wheels/numpy-1.16.0-cp36-cp36m-linux_arm.whl
+NUMPY_EXTRACT := $(call extract,$(NUMPY_ZIP),numpy-1.16.1)
+NUMPY_WHEEL := $(WORKING)/wheels/numpy-1.16.1-cp36-cp36m-linux_arm.whl
 NUMPY_CORE_LIB := lib/python3.6/site-packages/numpy/core/lib
 
 $(NUMPY_EXTRACT)/site.cfg: $(NUMPY_EXTRACT).extracted
@@ -39,7 +39,7 @@ $(NUMPY_WHEEL): $(NUMPY_EXTRACT)/site.cfg \
 			--libraries $(PYTHON_SHLIBS) \
 			bdist_wheel --dist-dir=$(WHEELS) \
 	&& pip install  -I --prefix=$(INSTALL) -f $(WHEELS) \
-		numpy==1.16.0 \
+		numpy==1.16.1 \
 	&& rm -r $(CROSSENV)/build/$(NUMPY_CORE_LIB) \
 	&& ln -s $(INSTALL)/$(NUMPY_CORE_LIB) \
 		$(CROSSENV)/build/$(NUMPY_CORE_LIB)
@@ -126,6 +126,6 @@ $(host-python-wheels): $(PANDAS_WHEEL)
 $(host-python-modules): $(host-python-wheels)
 	. $(CROSSENV_ACTIVATE) \
 	&& pip install -I --prefix=$(INSTALL) -f $(WHEELS) \
-		numpy==1.16.0 pandas==0.24.0 scipy==1.2.0 \
+		numpy==1.16.1 pandas==0.24.0 scipy==1.2.0 \
 		scikit-learn==0.20.2	pip setuptools
 	touch $@
