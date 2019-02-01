@@ -19,7 +19,14 @@ should be installed on the build machine.
 
 To build, it should be enough to run ``make``.
 
-To build using Docker:
+To build using Docker, first build the image:
+
+.. code:: sh
+
+    $ docker build \
+        https://github.com/ezeenova/python-cross-compiling-example#linux-gnu-armhf
+
+Then run the image:
 
 .. code:: sh
 
@@ -27,7 +34,7 @@ To build using Docker:
         -v /path/to/working:/working \
         -v /path/to/output:/output \
         -v /path/to/this/repo:/source \
-        ezeenova/python-cross-compiling-example#linux-gnu-armhf
+        <image>
 
 Where ``working`` is a scratch directory for intermediate build files.
 

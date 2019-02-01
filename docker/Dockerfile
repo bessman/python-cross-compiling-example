@@ -14,8 +14,9 @@ RUN apt update && \
         python \
         unzip \
         zlib1g-dev \
-	libsqlite3-dev \
-	g++-arm-linux-gnueabihf && \
+	    libsqlite3-dev \
+	    g++-arm-linux-gnueabihf \
+        gfortran-arm-linux-gnueabihf && \
     rm -rf /var/lib/apt/lists/* && \
     mkdir /working /source /output
 
